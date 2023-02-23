@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
 import styled from 'styled-components'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
+import React from 'react'
 import { useState } from 'react'
+import dotenv from 'dotenv'
 
 const Container = styled.div`
   display: flex;
@@ -23,19 +25,23 @@ const Main = styled.main`
 `
 
 const HomePage: NextPage = () => {
+  dotenv.config()
+
   const [dataUrl, setDataUrl] = useState('')
 
   const s3 = new S3Client({
     region: 'ap-northeast-1',
     credentials: {
-      accessKeyId: 'accessKeyId',
-      secretAccessKey: 'secretAccessKey',
+      accessKeyId: process.env.ACCESSKEYID ? process.env.ACCESSKEYID : '',
+      secretAccessKey: process.env.SECRETACCESSKEY
+        ? process.env.SECRETACCESSKEY
+        : '',
     },
   })
 
   const command = new GetObjectCommand({
-    Bucket: 'bucke-name',
-    Key: 'object-key.jpeg',
+    Bucket: process.env.BUCKET ? process.env.BUCKET : '',
+    Key: 'object-key.txt',
   })
 
   // S3 オブジェクトの内容を取得する
@@ -44,7 +50,7 @@ const HomePage: NextPage = () => {
       const res = await s3.send(command)
       if (res.Body) {
         const tmp = await res.Body.transformToString()
-        console.log(tmp)
+        // console.log(tmp)
         return tmp
       } else {
         console.log('失敗')
@@ -56,8 +62,8 @@ const HomePage: NextPage = () => {
   }
 
   const interval = (dumyfps: number) => {
-    setTimeout(() => {
-      s3GetObject()
+    setTimeout(async () => {
+      await s3GetObject()
         .then((url) => {
           if (url) {
             setDataUrl(url)
@@ -70,6 +76,8 @@ const HomePage: NextPage = () => {
       interval(dumyfps)
     }, dumyfps)
   }
+  interval(20)
+
   return (
     <Container>
       <Main />
