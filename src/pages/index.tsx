@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import React from 'react'
 import { useState } from 'react'
-import dotenv from 'dotenv'
 
 const Container = styled.div`
   display: flex;
@@ -25,22 +24,22 @@ const Main = styled.main`
 `
 
 const HomePage: NextPage = () => {
-  dotenv.config()
-
   const [dataUrl, setDataUrl] = useState('')
 
   const s3 = new S3Client({
     region: 'ap-northeast-1',
     credentials: {
-      accessKeyId: process.env.ACCESSKEYID ? process.env.ACCESSKEYID : '',
-      secretAccessKey: process.env.SECRETACCESSKEY
-        ? process.env.SECRETACCESSKEY
+      accessKeyId: process.env.REACT_APP_ACCESSKEYID
+        ? process.env.REACT_APP_ACCESSKEYID
+        : '',
+      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY
+        ? process.env.REACT_APP_SECRETACCESSKEY
         : '',
     },
   })
 
   const command = new GetObjectCommand({
-    Bucket: process.env.BUCKET ? process.env.BUCKET : '',
+    Bucket: process.env.REACT_APP_BUCKET ? process.env.REACT_APP_BUCKET : '',
     Key: 'object-key.txt',
   })
 
