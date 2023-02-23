@@ -6,9 +6,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-    REACT_APP_ACCESSKEYID: ${{ secrets.REACT_APP_ACCESSKEYID }}
-    REACT_APP_SECRETACCESSKEY: ${{ secrets.REACT_APP_SECRETACCESSKEY }}
-    REACT_APP_BUCKET: ${{ secrets.REACT_APP_BUCKET }}
+      REACT_APP_ACCESSKEYID: ${{ secrets.REACT_APP_ACCESSKEYID }}
+      REACT_APP_SECRETACCESSKEY: ${{ secrets.REACT_APP_SECRETACCESSKEY }}
+      REACT_APP_BUCKET: ${{ secrets.REACT_APP_BUCKET }}
 
     environment:
       name: test
