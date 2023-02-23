@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import styled from 'styled-components'
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 const Container = styled.div`
@@ -14,75 +13,32 @@ const Container = styled.div`
   padding: 0 0.5rem;
 `
 
-const Main = styled.main`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 0;
-`
-
 const HomePage: NextPage = () => {
   const [dataUrl, setDataUrl] = useState('')
+  const [testdataUrl, setTestdataUrl] = useState('')
 
-  const s3 = new S3Client({
-    region: 'ap-northeast-1',
-    credentials: {
-      accessKeyId: process.env.REACT_APP_ACCESSKEYID
-        ? process.env.REACT_APP_ACCESSKEYID
-        : '',
-      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY
-        ? process.env.REACT_APP_SECRETACCESSKEY
-        : '',
-    },
-  })
-
-  const command = new GetObjectCommand({
-    Bucket: process.env.REACT_APP_BUCKET ? process.env.REACT_APP_BUCKET : '',
-    Key: 'object-key.txt',
-  })
-
-  // S3 オブジェクトの内容を取得する
-  const s3GetObject = async () => {
-    try {
-      const res = await s3.send(command)
-      if (res.Body) {
-        const tmp = await res.Body.transformToString()
-        // console.log(tmp)
-        return tmp
-      } else {
-        console.log('失敗')
-        return null
-      }
-    } catch (e) {
-      console.log(e)
+  useEffect(() => {
+    let a = 0
+    const interval = (dumyfps: number) => {
+      setTimeout(async () => {
+        setTestdataUrl(
+          `https://d1ommktmz1mavo.cloudfront.net/object${(a++ % 2) + 1}.jpg`
+        )
+        interval(dumyfps)
+      }, dumyfps)
     }
-  }
-
-  const interval = (dumyfps: number) => {
-    setTimeout(async () => {
-      await s3GetObject()
-        .then((url) => {
-          if (url) {
-            setDataUrl(url)
-          }
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-      // const fps = 1000 / dumyfps
-      interval(dumyfps)
-    }, dumyfps)
-  }
-  interval(20)
+    interval(250)
+  }, [])
 
   return (
     <Container>
-      <Main />
       <img
         src={dataUrl}
         alt="平均化画像"
+      />
+      <img
+        src={testdataUrl}
+        alt="表示されない"
       />
     </Container>
   )
