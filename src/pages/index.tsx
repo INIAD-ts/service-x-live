@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import styled from 'styled-components'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import App from './threeFiber'
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const HomePage: NextPage = () => {
     // let a = 0
     const interval = (dumyfps: number) => {
       setTimeout(async () => {
-        fetch('https://d1ommktmz1mavo.cloudfront.net/object.txt')
+        fetch('https://d1ommktmz1mavo.cloudfront.net/object-key.txt')
           // fetch('message.txt')
           .then(async (response) => {
             setDataUrl(await response.text())
@@ -36,10 +37,11 @@ const HomePage: NextPage = () => {
 
   return (
     <Container>
-      <img
+      {/* <img
         src={dataUrl}
-        alt="平均化画像"
-      />
+        alt="test"
+      /> */}
+      <App url={dataUrl} />
     </Container>
   )
 }

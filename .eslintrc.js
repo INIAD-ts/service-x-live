@@ -38,7 +38,7 @@ module.exports = {
     'prefer-template': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-
+    "react/no-unknown-property": ['error', { ignore: ['attach',"args","map","side"] }],
     'no-unreachable': ['error'], //到達できないコードはエラー
   },
 }
