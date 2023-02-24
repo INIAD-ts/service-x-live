@@ -24,6 +24,7 @@ const HomePage: NextPage = () => {
           // fetch('message.txt')
           .then(async (response) => {
             setDataUrl(await response.text())
+            console.log('liveの成功')
           })
           .catch((e) => {
             console.log(e)
@@ -31,7 +32,7 @@ const HomePage: NextPage = () => {
         interval(dumyfps)
       }, dumyfps)
     }
-    interval(250)
+    interval(100)
   }, [])
 
   return (
