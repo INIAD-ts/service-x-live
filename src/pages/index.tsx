@@ -20,7 +20,7 @@ const HomePage: NextPage = () => {
     // let a = 0
     const interval = (dumyfps: number) => {
       setTimeout(async () => {
-        fetch('https://d1ommktmz1mavo.cloudfront.net/object.txt')
+        fetch('https://d1ommktmz1mavo.cloudfront.net/object-key.txt')
           // fetch('message.txt')
           .then(async (response) => {
             setDataUrl(await response.text())
