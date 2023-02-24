@@ -15,15 +15,19 @@ const Container = styled.div`
 
 const HomePage: NextPage = () => {
   const [dataUrl, setDataUrl] = useState('')
-  const [testdataUrl, setTestdataUrl] = useState('')
 
   useEffect(() => {
-    let a = 0
+    // let a = 0
     const interval = (dumyfps: number) => {
       setTimeout(async () => {
-        setTestdataUrl(
-          `https://d1ommktmz1mavo.cloudfront.net/object${(a++ % 2) + 1}.jpg`
-        )
+        fetch('https://d1ommktmz1mavo.cloudfront.net/object.txt')
+          // fetch('message.txt')
+          .then(async (response) => {
+            setDataUrl(await response.text())
+          })
+          .catch((e) => {
+            console.log(e)
+          })
         interval(dumyfps)
       }, dumyfps)
     }
@@ -35,10 +39,6 @@ const HomePage: NextPage = () => {
       <img
         src={dataUrl}
         alt="平均化画像"
-      />
-      <img
-        src={testdataUrl}
-        alt="表示されない"
       />
     </Container>
   )
