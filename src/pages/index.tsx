@@ -32,7 +32,7 @@ const HomePage: NextPage = () => {
         interval(dumyfps)
       }, dumyfps)
     }
-    interval(50)
+    interval(100)
   }, [])
 
   return (
