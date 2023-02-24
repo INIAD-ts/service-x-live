@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import styled from 'styled-components'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import App from './threeFiber'
 
 const Container = styled.div`
   display: flex;
@@ -37,10 +38,11 @@ const HomePage: NextPage = () => {
 
   return (
     <Container>
-      <img
+      {/* <img
         src={dataUrl}
-        alt="平均化画像"
-      />
+        alt="test"
+      /> */}
+      <App url={dataUrl} />
     </Container>
   )
 }
