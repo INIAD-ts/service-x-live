@@ -26,7 +26,6 @@ const HomePage: NextPage = () => {
           .then(async (response) => {
             const b = await response.text()
             setDataUrl(b)
-            console.log(b)
             console.log('liveの成功')
           })
           .catch((e) => {
