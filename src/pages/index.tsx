@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import styled from 'styled-components'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 import App from './threeFiber'
 
@@ -17,14 +17,16 @@ const Container = styled.div`
 const HomePage: NextPage = () => {
   const [dataUrl, setDataUrl] = useState('')
 
-  useEffect(() => {
-    // let a = 0
+  // let a = 0
+  useMemo(() => {
     const interval = (dumyfps: number) => {
-      setTimeout(async () => {
+      setTimeout(() => {
         fetch('https://d1ommktmz1mavo.cloudfront.net/object-key.txt')
           // fetch('message.txt')
           .then(async (response) => {
-            setDataUrl(await response.text())
+            const b = await response.text()
+            setDataUrl(b)
+            console.log(b)
             console.log('liveの成功')
           })
           .catch((e) => {
@@ -33,7 +35,7 @@ const HomePage: NextPage = () => {
         interval(dumyfps)
       }, dumyfps)
     }
-    interval(100)
+    interval(500)
   }, [])
 
   return (
